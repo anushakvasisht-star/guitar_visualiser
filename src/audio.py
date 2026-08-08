@@ -1,19 +1,14 @@
-import sounddevice as sd
 import numpy as np
+import sounddevice as sd
 
-print("Program started")
+
+current_rms = 0.0
+
 
 def audio_callback(indata, frames, time, status):
-    rms = np.sqrt(np.mean(np.square(indata)))
-    print(f"{rms:.4f}")
+    global current_rms
 
-print("Opening stream...")
+    if status:
+        print(status)
 
-with sd.InputStream(device=2, callback=audio_callback):
-    print("Stream opened")
-    input("Listening... Press Enter to stop.\n")
-
-
-
-
-
+    current_rms = np.sqrt(np.mean(indata ** 2))
