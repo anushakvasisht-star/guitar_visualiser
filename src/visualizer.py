@@ -12,6 +12,9 @@ pygame.display.set_caption("Guitar Visualiser")
 
 running = True
 
+MIN_RMS = 0.01
+MAX_RMS = 0.10
+
 smooth_rms = 0.0
 
 while running:
@@ -22,16 +25,20 @@ while running:
     screen.fill((0, 0, 0))
 
     smooth_rms = smooth_rms * 0.85 + audio.current_rms * 0.15
-    radius = int(smooth_rms * 50)
 
-    if radius > 10:
+    if smooth_rms > MIN_RMS:
+        normalized = (smooth_rms - MIN_RMS) / (MAX_RMS - MIN_RMS)
+        normalized = max(0, min(normalized, 1))
+
+        radius = int(20 + normalized * (150 - 20))
+
         print(f"RMS: {audio.current_rms:.6f} | Radius: {radius}")
 
-    pygame.draw.circle(
-        screen,
-        (255, 255, 255),
-        (400, 300),
-        radius
+        pygame.draw.circle(
+            screen,
+            (255, 255, 255),
+           (400, 300),
+             radius
     )
 
     pygame.display.flip()
