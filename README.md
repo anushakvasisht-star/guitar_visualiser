@@ -1,39 +1,64 @@
-# Guitar Visualiser 🎸
+# Guitar Audio Visualizer
 
-A real-time guitar visualizer built with Python. The goal is to analyze live guitar audio and create visuals that react to loudness, pitch, and other musical features.
+A real-time audio visualizer that converts guitar sounds into visual elements.
 
----
+The project takes audio input from a guitar/microphone, analyzes the incoming signal, and generates visual circles based on the characteristics of the sound. The long-term goal is to turn guitar playing into an evolving digital "paint splash" visualization.
 
-## Roadmap
+## Project Status
 
-- [x] Capture live audio
-- [x] Measure loudness (RMS)
-- [ ] Draw first circle
-- [ ] Animate circle with loudness
-- [ ] Detect pitch
-- [ ] Map pitch to colors
-- [ ] Draw waveform
-- [ ] Draw frequency spectrum (FFT)
-- [ ] Support guitar amp input
-- [ ] Audio device selector
-- [ ] Final UI polish
+**In progress**
 
----
+The basic audio input and visualization pipeline is working. The current version can detect guitar sound, create circles based on the sound level, place them randomly on the screen, and gradually shrink them over time.
 
-## Development Log
+## Current Features
 
-### Day 1
+- Real-time audio input using `sounddevice`
+- RMS-based audio amplitude detection
+- Audio smoothing to reduce sudden visual jumps
+- Normalization of audio levels
+- Threshold-based sound detection
+- Circles generated in response to audio
+- Circle size based on the loudness of the detected sound
+- Random positioning of circles
+- Independent shrinking of each circle
+- Multiple circles can exist on screen simultaneously
 
-#### Completed
-- Created the project structure.
-- Set up the Python virtual environment.
-- Installed the required libraries.
-- Learned the basic Git workflow (`git add`, `git commit`, `git push`).
-- Captured live microphone input using `sounddevice`.
-- Calculated real-time loudness using RMS.
-- Verified the audio pipeline by detecting a clap.
+## How It Currently Works
 
-#### Learned
-- Audio arrives as chunks of samples.
-- `indata` is a NumPy array with shape `(samples, channels)`.
-- RMS is a standard way to measure loudness from raw audio.
+The current pipeline is:
+
+Audio Input  
+↓  
+RMS Calculation  
+↓  
+Smoothing  
+↓  
+Normalization  
+↓  
+Sound/Note Detection  
+↓  
+Circle Generation  
+↓  
+Pygame Visualization
+
+Each detected sound event creates a new circle. The circle's initial size depends on the detected audio level, and it gradually shrinks after being created.
+
+## Technologies Used
+
+- Python
+- NumPy
+- SoundDevice
+- Pygame
+- Git / GitHub
+
+## Project Structure
+
+```text
+guitar-audio-visualizer/
+│
+├── src/
+│   ├── audio.py
+│   └── visualizer.py
+│
+├── README.md
+└── ...
